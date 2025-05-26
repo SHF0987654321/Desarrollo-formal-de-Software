@@ -28,7 +28,8 @@
     </dependencyManagement>
 
     <modules>
-        <module>servicio-usuarios</module> </modules>
+        <module>servicio-usuarios</module>
+        <module>eureka-server</module> </modules>
 
     <build>
         <pluginManagement>
