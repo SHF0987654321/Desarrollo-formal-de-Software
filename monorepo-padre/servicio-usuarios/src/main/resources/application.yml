@@ -5,7 +5,7 @@ spring:
   application:
     name: servicio-usuarios
   config:
-    import: optional:configserver:
+    import: optional:configserver
 
 eureka:
   client:
