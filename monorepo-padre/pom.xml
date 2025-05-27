@@ -16,7 +16,6 @@
         <spring-cloud.version>2024.0.1</spring-cloud.version> </properties>
 
         <dependencyManagement>
-        <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
