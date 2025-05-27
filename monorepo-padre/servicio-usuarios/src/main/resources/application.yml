@@ -4,8 +4,8 @@ server:
 spring:
   application:
     name: servicio-usuarios
-  config:
-    import: optional:configserver:
+  config: 
+    import: configserver:http://localhost:8888
 
 eureka:
   client:
