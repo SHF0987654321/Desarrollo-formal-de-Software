@@ -14,7 +14,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <spring-boot.version>3.4.6</spring-boot.version>
-        <spring-cloud.version>2024.0.1</spring-cloud.version>
+        <spring-cloud.version>2024.0.3</spring-cloud.version>
         <lombok.version>1.18.32</lombok.version>
     </properties>
 
