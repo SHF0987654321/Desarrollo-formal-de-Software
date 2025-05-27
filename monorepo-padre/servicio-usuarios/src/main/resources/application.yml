@@ -4,7 +4,8 @@ server:
 spring:
   application:
     name: servicio-usuarios # Este nombre es el que Eureka registrará. Se usará en MAYÚSCULAS en el Gateway (SERVICIO-USUARIOS).
-
+  config:
+    import: optional:configserver:
 eureka:
   client:
     service-url:
