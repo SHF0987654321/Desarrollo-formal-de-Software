@@ -40,7 +40,6 @@
                 <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
                 <version>${spring-cloud.version}</version>
             </dependency>
-            </dependencies>
     </dependencyManagement>
 
     <modules>
