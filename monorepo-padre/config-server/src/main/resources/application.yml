@@ -1,0 +1,19 @@
+server:
+  port: 8888 # Puerto para el Config Server (por defecto 8888)
+
+spring:
+  application:
+    name: config-server # Nombre para Eureka (si decides registrarlo)
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/tu-usuario/tu-repositorio-de-configuracion.git # ¡IMPORTANTE! Cambia esto por la URL de tu repositorio de Git donde guardarás las configuraciones.
+          # search-paths: # Opcional: si tus archivos de configuración no están en la raíz del repo de Git
+          #   - 'config' # Por ejemplo, si tienes una carpeta 'config' dentro de tu repo de Git
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka # Apunta a tu servidor Eureka
+  instance:
+    hostname: localhost # Importante si tu Config Server se registra en Eureka

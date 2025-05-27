@@ -48,6 +48,7 @@
         <module>servicio-usuarios</module>
         <module>eureka-server</module>
         <module>gateway-server</module>
+        <module>config-server</module>
     </modules>
 
     <build>
