@@ -47,6 +47,7 @@
     <modules>
         <module>servicio-usuarios</module>
         <module>eureka-server</module>
+        <module>gateway-server</module>
     </modules>
 
     <build>
@@ -107,7 +108,7 @@
             <name>Spring Snapshots</name>
             <url>https://repo.spring.io/snapshot</url>
             <releases>
-                <enabled>false</releases>
+                <enabled>false</enabled>
             </releases>
         </pluginRepository>
         <pluginRepository>

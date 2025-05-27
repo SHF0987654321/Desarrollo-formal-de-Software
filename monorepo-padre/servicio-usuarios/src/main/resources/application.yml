@@ -1,0 +1,11 @@
+server:
+  port: 8081 # El puerto donde correrá tu servicio de usuarios (puedes elegir otro, ej. 8081, 8082, etc.)
+
+spring:
+  application:
+    name: servicio-usuarios # Este nombre es el que Eureka registrará. Se usará en MAYÚSCULAS en el Gateway (SERVICIO-USUARIOS).
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka # Apunta a tu servidor Eureka
