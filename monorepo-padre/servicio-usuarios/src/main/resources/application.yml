@@ -3,7 +3,7 @@ spring:
     name: servicio-usuarios
 
   config:
-    import: "configserver:"  # ← Esto es obligatorio desde Spring Boot 3.x
+    import: optional:configserver:discovery/
 
   cloud:
     config:

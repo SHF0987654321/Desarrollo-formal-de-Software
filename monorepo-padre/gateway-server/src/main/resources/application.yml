@@ -2,7 +2,7 @@ spring:
   application:
     name: gateway-server # Nombre con el que el Config Server buscará la configuración (gateway-server.yml)
   config:
-    import: "configserver:" # El Gateway se conecta al Config Server via Eureka
+    import: optional:configserver:discovery/ # El Gateway se conecta al Config Server via Eureka
   cloud:
     config:
       discovery:
