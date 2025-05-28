@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: servicio-usuarios
+  config: 
+    import: configserver:config-server
