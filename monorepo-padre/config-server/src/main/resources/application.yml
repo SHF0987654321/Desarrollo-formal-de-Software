@@ -1,5 +1,18 @@
+server:
+  port: 8888 # Puerto para el Config Server
+
 spring:
   application:
-    name: gateway-server # Nombre con el que el Config Server buscará la configuración (gateway-server.yml)
-  config:
-    import: configserver:config-server # El Gateway se conecta al Config Server via Eureka
+    name: config-server # Nombre para Eureka
+  cloud:
+    config:
+      server:
+        git:
+          uri: ./config-repo # ¡Esta es la línea clave! Apunta a tu repositorio Git local.
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka # Apunta a tu servidor Eureka
+  instance:
+    hostname: localhost
