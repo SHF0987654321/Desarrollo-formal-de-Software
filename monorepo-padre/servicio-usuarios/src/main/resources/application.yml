@@ -3,7 +3,7 @@ spring:
     name: servicio-usuarios
 
   config:
-    import: configserver:discovery/
+    import: optional:configserver:discovery/
 
   cloud:
     config:
