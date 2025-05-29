@@ -8,7 +8,9 @@ spring:
     config:
       server:
         git:
-          uri: ./config-repo # ¡Esta es la línea clave! Apunta a tu repositorio Git local.
+          uri: https://github.com/SHF0987654321/monorepo-config.git # ¡Esta es la línea clave! Apunta a tu repositorio Git local.
+          username: SHF0987654321 # <-- Tu nombre de usuario de GitHub
+          password: ${GITHUB_CONFIG_REPO_PAT} # <-- Tu token de acceso personal de GitHub
 
 eureka:
   client:
