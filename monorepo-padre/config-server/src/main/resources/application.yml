@@ -11,6 +11,7 @@ spring:
           uri: https://github.com/SHF0987654321/monorepo-config.git # ¡Esta es la línea clave! Apunta a tu repositorio Git local.
           username: SHF0987654321 # <-- Tu nombre de usuario de GitHub
           password: ${CONFIG_REPO_PAT} # <-- Tu token de acceso personal de GitHub
+        clone-on-start: true # Clona el repositorio al iniciar el Config Server
 
 eureka:
   client:
