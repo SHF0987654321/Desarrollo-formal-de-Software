@@ -1,3 +1,6 @@
+server:
+  port: 0 # ← Puerto 0 para que el sistema operativo asigne un puerto libre automáticamente
+  
 spring:
   application:
     name: gateway-server # Nombre con el que el Config Server buscará la configuración (gateway-server.yml)
