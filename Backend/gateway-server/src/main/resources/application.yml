@@ -1,0 +1,26 @@
+server:
+  port: 0 # ← Puerto 0 para que el sistema operativo asigne un puerto libre automáticamente
+  
+spring:
+  application:
+    name: gateway-server # Nombre con el que el Config Server buscará la configuración (gateway-server.yml)
+  config:
+    import: optional:configserver:discovery/ # El Gateway se conecta al Config Server via Eureka
+  cloud:
+    config:
+      discovery:
+        enabled: true             # ← Habilita que use Eureka para buscar el config-server
+        service-id: CONFIG-SERVER # ← Nombre con el que el config-server está registrado en Eureka
+    gateway:
+      routes:
+        - id: servicio-usuarios
+          uri: lb://SERVICIO-USUARIOS # ← Nombre del servicio registrado en Eureka
+          predicates:
+            - Path=/api/usuarios/**
+            
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    instance-id: $(spring.application.name):${random.value} # ← Nombre de la instancia del Gateway
