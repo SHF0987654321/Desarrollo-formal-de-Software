@@ -85,6 +85,8 @@ export default function ForgotPasswordPage() {
           <div className="flex items-center justify-between">
             {/* Back Arrow */}
             {/* CAMBIO: Color del icono al hover */}
+            {/*Deberia hacer la lgica para que se devuelva al inicio de donde vino*/}
+            {/*¿O esta bien que vaya a la pagina de eleccion de tipo de inicio?*/}
             <Link
               href="/tipo-inicio-sesion" // Asegúrate de que esta URL sea correcta para tu página de login
               className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-slate-100 transition-colors group"
@@ -244,6 +246,8 @@ export default function ForgotPasswordPage() {
               {/* Back to Login */}
               <div className="text-center">
                 {/* CAMBIO: Color del enlace a cian */}
+                {/*Deberia hacer la lgica para que se devuelva al inicio de donde vino*/}
+                {/*¿O esta bien que vaya a la pagina de eleccion de tipo de inicio?*/}
                 <Link
                   href="/tipo-inicio-sesion" // Asegúrate de que esta URL sea correcta para tu página de login
                   className="inline-flex items-center gap-2 text-cyan-600 hover:text-cyan-700 font-medium underline transition-colors"
