@@ -32,3 +32,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     instance-id: $(spring.application.name):${random.value}
+    # Configuración de JWT (JSON Web Token)
+jwt:
+  secret: ${JWT_SECRET_KEY} # ¡MUY IMPORTANTE! Usa una clave secreta FUERTE y obtenla de variables de entorno o Config Server
+  expiration: 86400000 # 1 día en milisegundos (86400 * 1000
