@@ -1,5 +1,5 @@
 server:
-  port: 0 # ← Puerto 0 para que el sistema operativo asigne un puerto libre automáticamente
+  port: 8080 # 0 ← Puerto 0 para que el sistema operativo asigne un puerto libre automáticamente
   
 spring:
   application:

@@ -1,0 +1,37 @@
+server:
+  port: 0 # Puerto dinámico, asignado por Eureka
+
+spring:
+  application:
+    name: servicio-rastreo # Nombre con el que se registrará en Eureka
+
+  datasource:
+    url: ${DB_TRACKER_URL} # URL de tu base de datos MariaDB para el microservicio de rastreo
+    username: ${DB_TRACKER_USERNAME}
+    password: ${DB_TRACKER_PASSWORD}
+    driver-class-name: ${DB_CLASS_TRACKER}
+  
+  jpa:
+    hibernate:
+      ddl-auto: update # Crea/actualiza el esquema de la DB automáticamente
+    show-sql: true # Muestra las consultas SQL en la consola
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect # Dialecto para MariaDB
+        format_sql: true # Formatea el SQL para que sea legible
+
+  config:
+    import: optional:configserver:discovery/ # Permite importar configuración del Config Server
+
+  cloud:
+    config:
+      discovery:
+        enabled: true          # Habilita que use Eureka para buscar el config server
+        service-id: CONFIG-SERVER  # Nombre con el que el config-server está registrado en Eureka
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # URL de tu Eureka Server
+  instance:
+    instance-id: ${spring.application.name}:${random.value} # ID único en Eureka

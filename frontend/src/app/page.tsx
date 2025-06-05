@@ -54,10 +54,10 @@ export default function Component() {
             <div className="flex items-center space-x-3">
               {/* Estos enlaces deberían llevar a las páginas de login/register */}
               <Button asChild variant="ghost" className="text-slate-600 hover:text-blue-600 hover:bg-blue-50">
-                <Link href="/tipo-inicio-sesion">Iniciar Sesión</Link>
+                <Link href="/inicio">Iniciar Sesión</Link>
               </Button>
               <Button asChild className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-300">
-                <Link href="/tipo-registro">Registrarse</Link>
+                <Link href="/registro">Registrarse</Link>
               </Button>
             </div>
           </div>

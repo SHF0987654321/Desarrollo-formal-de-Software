@@ -12,12 +12,14 @@ import { ArrowLeft, X, Mail, CheckCircle, AlertCircle } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
+import api from "../../services/api" // Importa tu cliente API
+
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
-  const [showError, setShowError] = useState(false)
+  const [apiError, setApiError] = useState<string | null>(null) // Para errores de la API
 
   const handleInputChange = (value: string) => {
     setEmail(value)
@@ -26,9 +28,9 @@ export default function ForgotPasswordPage() {
       setErrors({})
     }
     // Clear success/error states when user starts typing again
-    if (isSuccess || showError) {
+    if (isSuccess || apiError) { // Usa apiError en lugar de showError
       setIsSuccess(false)
-      setShowError(false)
+      setApiError(null)
     }
   }
 
@@ -48,25 +50,33 @@ export default function ForgotPasswordPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!validateForm()) return
+    if (!validateForm()) {
+      setApiError("Por favor, ingresa un correo electrónico válido.") // Mensaje de error general de validación
+      return
+    }
 
     setIsLoading(true)
-    setShowError(false)
+    setApiError(null) // Limpiar errores anteriores de la API
 
     try {
-      // Simulate API call
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          // Simulate random success/failure for demo
-          Math.random() > 0.2 ? resolve(true) : reject(new Error("Email not found"))
-        }, 2000)
-      })
+      // Llamada real a la API del backend
+      // El endpoint es /api/auth/forgot-password y espera el email en el cuerpo de la solicitud
+      await api.post("/auth/forgot-password", email, { // Envía el email directamente como cuerpo de la solicitud
+        headers: {
+          'Content-Type': 'text/plain' // Asegúrate de que el backend espere text/plain para el email directo
+        }
+      });
 
       setIsSuccess(true)
       console.log("Password reset email sent to:", email)
-    } catch (error) {
-      setShowError(true)
-      console.error("Error sending reset email:", error)
+    } catch (err: any) {
+      console.error("Error sending reset email:", err);
+      if (err.response) {
+        // Asumiendo que el backend devuelve un objeto de error con un campo 'message'
+        setApiError(err.response.data.message || 'No pudimos enviar el correo. Inténtalo de nuevo.');
+      } else {
+        setApiError('Error de red o servidor no disponible. Inténtalo de nuevo.');
+      }
     } finally {
       setIsLoading(false)
     }
@@ -84,11 +94,8 @@ export default function ForgotPasswordPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Back Arrow */}
-            {/* CAMBIO: Color del icono al hover */}
-            {/*Deberia hacer la lgica para que se devuelva al inicio de donde vino*/}
-            {/*¿O esta bien que vaya a la pagina de eleccion de tipo de inicio?*/}
             <Link
-              href="/tipo-inicio-sesion" // Asegúrate de que esta URL sea correcta para tu página de login
+              href="/inicio" // Asegúrate de que esta URL sea correcta para tu página de login
               className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-slate-100 transition-colors group"
             >
               <ArrowLeft className="w-5 h-5 text-slate-600 group-hover:text-cyan-700" />
@@ -99,7 +106,6 @@ export default function ForgotPasswordPage() {
               <div className="w-8 h-8 relative">
                 <Image src="/owl-logo.png" alt="OHO Logo" fill className="object-contain" />
               </div>
-              {/* CAMBIO: Degradado del texto del logo a un cian más prominente */}
               <span className="text-xl font-bold bg-gradient-to-r from-slate-800 to-cyan-600 bg-clip-text text-transparent">
                 OHO
               </span>
@@ -116,7 +122,6 @@ export default function ForgotPasswordPage() {
         <div className="w-full max-w-md">
           {/* Title */}
           <div className="text-center mb-8">
-            {/* CAMBIO: Degradado del círculo del icono principal a cian */}
             <div className="w-16 h-16 bg-gradient-to-br from-cyan-600 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <Mail className="w-8 h-8 text-white" />
             </div>
@@ -132,9 +137,9 @@ export default function ForgotPasswordPage() {
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Success State */}
+              {/* API Success State */}
               {isSuccess && (
-                <Alert className="border-green-200 bg-green-50"> {/* Los colores de éxito se suelen mantener verdes */}
+                <Alert className="border-green-200 bg-green-50">
                   <CheckCircle className="h-4 w-4 text-green-600" />
                   <AlertDescription className="text-green-800">
                     <div className="space-y-2">
@@ -151,16 +156,19 @@ export default function ForgotPasswordPage() {
                 </Alert>
               )}
 
-              {/* Error State */}
-              {showError && (
-                <Alert className="border-red-200 bg-red-50"> {/* Los colores de error se suelen mantener rojos */}
+              {/* API Error State */}
+              {apiError && ( // Usa apiError aquí
+                <Alert className="border-red-200 bg-red-50">
                   <AlertCircle className="h-4 w-4 text-red-600" />
                   <AlertDescription className="text-red-800">
                     <div className="space-y-2">
-                      <p className="font-medium">No pudimos enviar el correo</p>
+                      <p className="font-medium">Error:</p>
                       <p className="text-sm">
-                        No encontramos una cuenta asociada a este correo electrónico. Verifica que sea correcto o{" "}
-                        <Link href="/register" className="text-red-700 underline font-medium">
+                        {apiError}
+                      </p>
+                      <p className="text-sm text-red-700">
+                        Verifica que el correo sea correcto o{" "}
+                        <Link href="/registro" className="text-red-700 underline font-medium">
                           crea una cuenta nueva
                         </Link>
                         .
@@ -173,7 +181,6 @@ export default function ForgotPasswordPage() {
               {/* Form */}
               {!isSuccess && (
                 <>
-                  {/* CAMBIO: Color del fondo y borde del mensaje informativo a cian */}
                   <div className="bg-cyan-50 rounded-lg p-4 border border-cyan-200">
                     <p className="text-sm text-cyan-800 leading-relaxed">
                       <Mail className="w-4 h-4 inline mr-2" />
@@ -197,7 +204,7 @@ export default function ForgotPasswordPage() {
                         className={`transition-all duration-200 ${
                           errors.email
                             ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-                            : "border-slate-300 focus:border-cyan-500 focus:ring-cyan-500/20" // CAMBIO: Color del focus a cian
+                            : "border-slate-300 focus:border-cyan-500 focus:ring-cyan-500/20"
                         }`}
                         disabled={isLoading}
                       />
@@ -210,7 +217,6 @@ export default function ForgotPasswordPage() {
                     </div>
 
                     {/* Submit Button */}
-                    {/* CAMBIO: Degradado del botón principal a cian */}
                     <Button
                       type="submit"
                       disabled={isLoading}
@@ -245,11 +251,8 @@ export default function ForgotPasswordPage() {
 
               {/* Back to Login */}
               <div className="text-center">
-                {/* CAMBIO: Color del enlace a cian */}
-                {/*Deberia hacer la lgica para que se devuelva al inicio de donde vino*/}
-                {/*¿O esta bien que vaya a la pagina de eleccion de tipo de inicio?*/}
                 <Link
-                  href="/tipo-inicio-sesion" // Asegúrate de que esta URL sea correcta para tu página de login
+                  href="/inicio" // Asegúrate de que esta URL sea correcta para tu página de login
                   className="inline-flex items-center gap-2 text-cyan-600 hover:text-cyan-700 font-medium underline transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -261,7 +264,6 @@ export default function ForgotPasswordPage() {
               <div className="text-center pt-4 border-t border-slate-100">
                 <p className="text-xs text-slate-500 mb-2">¿Sigues teniendo problemas?</p>
                 <div className="flex justify-center space-x-4 text-xs">
-                  {/* CAMBIO: Color de los enlaces a cian */}
                   <Link href="/support" className="text-cyan-600 hover:text-cyan-700 underline">
                     Contactar Soporte
                   </Link>
@@ -275,7 +277,6 @@ export default function ForgotPasswordPage() {
 
           {/* Security Notice */}
           <div className="mt-6 text-center">
-            {/* CAMBIO: Fondo del aviso de seguridad a un cian muy claro */}
             <div className="bg-cyan-100 rounded-lg p-4">
               <p className="text-xs text-slate-600 leading-relaxed">
                 <strong>Nota de Seguridad:</strong> Por tu seguridad, el enlace de recuperación expirará en 24 horas. Si

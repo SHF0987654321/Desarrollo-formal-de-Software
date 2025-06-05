@@ -48,6 +48,7 @@
         <module>eureka-server</module>
         <module>gateway-server</module>
         <module>config-server</module>
+        <module>servicio-rastreo</module>
     </modules>
 
     <build>
