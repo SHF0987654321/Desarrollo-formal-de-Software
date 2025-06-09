@@ -11,6 +11,7 @@ import com.mercadeo.monorepo.servicio_rastreo.models.Listado;
 import com.mercadeo.monorepo.servicio_rastreo.models.Producto;
 import com.mercadeo.monorepo.servicio_rastreo.repository.ListadoRepository;
 import com.mercadeo.monorepo.servicio_rastreo.repository.ProductoRepository;
+import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.ListadoServiceInterface
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,16 +20,17 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class ListadoService {
+public class ListadoServiceImpl implements ListadoServiceInterface {
 
     private final ListadoRepository listadoRepository;
     private final ProductoRepository productoRepository;
 
-    public ListadoService(ListadoRepository listadoRepository, ProductoRepository productoRepository) {
+    public ListadoServiceImpl(ListadoRepository listadoRepository, ProductoRepository productoRepository) {
         this.listadoRepository = listadoRepository;
         this.productoRepository = productoRepository;
     }
 
+    @Override
     @Transactional
     public ListadoResponseDTO crearListado(CrearListadoRequestDTO request) {
         Producto producto = productoRepository.findById(request.getIdProducto())
@@ -53,6 +55,7 @@ public class ListadoService {
         return mapToListadoResponseDTO(nuevoListado);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public ListadoResponseDTO obtenerListadoPorId(UUID id) {
         Listado listado = listadoRepository.findById(id)
@@ -60,6 +63,7 @@ public class ListadoService {
         return mapToListadoResponseDTO(listado);
     }
 
+    @Override
     @Transactional
     public ListadoResponseDTO actualizarListado(UUID id, ActualizarListadoRequestDTO request) {
         Listado listado = listadoRepository.findById(id)
@@ -88,6 +92,7 @@ public class ListadoService {
         return mapToListadoResponseDTO(updatedListado);
     }
 
+    @Override
     @Transactional
     public void eliminarListado(UUID id) {
         Listado listado = listadoRepository.findById(id)
@@ -95,6 +100,7 @@ public class ListadoService {
         listadoRepository.delete(listado);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<ListadoResponseDTO> obtenerListadosPorProducto(UUID idProducto) {
         return listadoRepository.findByProductoId(idProducto)
@@ -103,6 +109,7 @@ public class ListadoService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<ListadoResponseDTO> obtenerListadosPorOrganizacion(UUID idOrganizacion) {
         return listadoRepository.findByIdOrganizacion(idOrganizacion)

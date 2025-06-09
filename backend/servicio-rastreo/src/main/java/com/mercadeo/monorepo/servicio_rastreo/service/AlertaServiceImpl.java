@@ -11,6 +11,7 @@ import com.mercadeo.monorepo.servicio_rastreo.models.Alerta;
 import com.mercadeo.monorepo.servicio_rastreo.models.Rastreador;
 import com.mercadeo.monorepo.servicio_rastreo.repository.AlertaRepository;
 import com.mercadeo.monorepo.servicio_rastreo.repository.RastreadorRepository;
+import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.AlertaServiceInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,19 +21,20 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class AlertaService {
+public class AlertaServiceImpl implements AlertaServiceInterface {
 
     private final AlertaRepository alertaRepository;
     private final RastreadorRepository rastreadorRepository;
     // Asumimos que hay un servicio para obtener el nombre del usuario
     // private final UserService userService;
 
-    public AlertaService(AlertaRepository alertaRepository, RastreadorRepository rastreadorRepository /*, UserService userService*/) {
+    public AlertaServiceImpl(AlertaRepository alertaRepository, RastreadorRepository rastreadorRepository /*, UserService userService*/) {
         this.alertaRepository = alertaRepository;
         this.rastreadorRepository = rastreadorRepository;
         // this.userService = userService;
     }
 
+    @Override
     @Transactional
     public AlertaResponseDTO crearAlerta(CrearAlertaRequestDTO request) {
         Rastreador rastreador = rastreadorRepository.findById(request.getIdRastreador())
@@ -51,6 +53,7 @@ public class AlertaService {
         return mapToAlertaResponseDTO(nuevaAlerta);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public AlertaResponseDTO obtenerAlertaPorId(UUID id) {
         Alerta alerta = alertaRepository.findById(id)
@@ -58,6 +61,7 @@ public class AlertaService {
         return mapToAlertaResponseDTO(alerta);
     }
 
+    @Override
     @Transactional
     public AlertaResponseDTO actualizarAlerta(UUID id, ActualizarAlertaRequestDTO request) {
         Alerta alerta = alertaRepository.findById(id)
@@ -84,6 +88,7 @@ public class AlertaService {
         return mapToAlertaResponseDTO(updatedAlerta);
     }
 
+    @Override
     @Transactional
     public void eliminarAlerta(UUID id) {
         Alerta alerta = alertaRepository.findById(id)
@@ -91,6 +96,7 @@ public class AlertaService {
         alertaRepository.delete(alerta);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<AlertaResponseDTO> obtenerAlertasPorUsuario(UUID idUsuarioDestinatario) {
         return alertaRepository.findByIdUsuarioDestinatario(idUsuarioDestinatario)
@@ -99,6 +105,7 @@ public class AlertaService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<AlertaResponseDTO> obtenerAlertasPorRastreador(UUID idRastreador) {
         return alertaRepository.findByRastreadorId(idRastreador)

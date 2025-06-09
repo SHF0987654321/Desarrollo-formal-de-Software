@@ -1,7 +1,7 @@
 package com.mercadeo.monorepo.servicio_rastreo.controller;
 
 import com.mercadeo.monorepo.servicio_rastreo.dtos.historialprecio.HistorialPrecioResponseDTO;
-import com.mercadeo.monorepo.servicio_rastreo.service.HistorialPrecioService;
+import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.HistorialPrecioServiceInterface;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +17,9 @@ import java.util.UUID;
 @Validated
 public class HistorialPrecioController {
 
-    private final HistorialPrecioService historialPrecioService;
+    private final HistorialPrecioServiceInterface historialPrecioService;
 
-    public HistorialPrecioController(HistorialPrecioService historialPrecioService) {
+    public HistorialPrecioController(HistorialPrecioServiceInterface historialPrecioService) {
         this.historialPrecioService = historialPrecioService;
     }
 

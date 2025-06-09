@@ -16,6 +16,7 @@ import com.mercadeo.servicio.usuarios.repository.InvitacionOrganizacionRepositor
 import com.mercadeo.servicio.usuarios.repository.OrganizacionRepository;
 import com.mercadeo.servicio.usuarios.repository.RolUsuarioOrganizacionRepository;
 import com.mercadeo.servicio.usuarios.repository.UsuarioRepository;
+import com.mercadeo.servicio.usuarios.services.interfaces.InvitacionServiceInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,14 +27,14 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class InvitacionService {
+public class InvitacionServiceImpl implements InvitacionServiceInterface {
 
     private final InvitacionOrganizacionRepository invitacionOrganizacionRepository;
     private final OrganizacionRepository organizacionRepository;
     private final UsuarioRepository usuarioRepository;
     private final RolUsuarioOrganizacionRepository rolUsuarioOrganizacionRepository;
 
-    public InvitacionService(InvitacionOrganizacionRepository invitacionOrganizacionRepository,
+    public InvitacionServiceImpl(InvitacionOrganizacionRepository invitacionOrganizacionRepository,
                              OrganizacionRepository organizacionRepository,
                              UsuarioRepository usuarioRepository,
                              RolUsuarioOrganizacionRepository rolUsuarioOrganizacionRepository) {
@@ -43,6 +44,7 @@ public class InvitacionService {
         this.rolUsuarioOrganizacionRepository = rolUsuarioOrganizacionRepository;
     }
 
+    @Override
     @Transactional
     public InvitacionResponseDTO enviarInvitacion(UUID idOrganizacion, EnviarInvitacionRequestDTO request, UUID idUsuarioInvitador) {
         Organizacion organizacion = organizacionRepository.findById(idOrganizacion)
@@ -80,6 +82,7 @@ public class InvitacionService {
         return mapToInvitacionResponseDTO(nuevaInvitacion);
     }
 
+    @Override
     @Transactional
     public InvitacionResponseDTO aceptarInvitacion(AceptarRechazarInvitacionRequestDTO request) {
         InvitacionOrganizacion invitacion = invitacionOrganizacionRepository.findByToken(request.getToken())
@@ -121,6 +124,7 @@ public class InvitacionService {
         return mapToInvitacionResponseDTO(updatedInvitacion);
     }
 
+    @Override
     @Transactional
     public InvitacionResponseDTO rechazarInvitacion(AceptarRechazarInvitacionRequestDTO request) {
         InvitacionOrganizacion invitacion = invitacionOrganizacionRepository.findByToken(request.getToken())
@@ -141,6 +145,7 @@ public class InvitacionService {
         return mapToInvitacionResponseDTO(updatedInvitacion);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<InvitacionResponseDTO> obtenerInvitacionesPendientesPorCorreo(String correo) {
         return invitacionOrganizacionRepository.findByCorreoInvitadoAndEstado(correo, EstadoInvitacion.PENDIENTE.name())

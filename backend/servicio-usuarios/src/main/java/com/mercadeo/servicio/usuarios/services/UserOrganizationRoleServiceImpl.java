@@ -10,6 +10,7 @@ import com.mercadeo.servicio.usuarios.models.Usuario;
 import com.mercadeo.servicio.usuarios.repository.OrganizacionRepository;
 import com.mercadeo.servicio.usuarios.repository.RolUsuarioOrganizacionRepository;
 import com.mercadeo.servicio.usuarios.repository.UsuarioRepository;
+import com.mercadeo.servicio.usuarios.services.interfaces.UserOrganizationRoleServiceInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,18 +19,19 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class UserOrganizationRoleService {
+public class UserOrganizationRoleServiceImpl implements UserOrganizationRoleService {
 
     private final RolUsuarioOrganizacionRepository rolUsuarioOrganizacionRepository;
     private final UsuarioRepository usuarioRepository;
     private final OrganizacionRepository organizacionRepository;
 
-    public UserOrganizationRoleService(RolUsuarioOrganizacionRepository rolUsuarioOrganizacionRepository, UsuarioRepository usuarioRepository, OrganizacionRepository organizacionRepository) {
+    public UserOrganizationRoleServiceImpl (RolUsuarioOrganizacionRepository rolUsuarioOrganizacionRepository, UsuarioRepository usuarioRepository, OrganizacionRepository organizacionRepository) {
         this.rolUsuarioOrganizacionRepository = rolUsuarioOrganizacionRepository;
         this.usuarioRepository = usuarioRepository;
         this.organizacionRepository = organizacionRepository;
     }
 
+    @Override
     @Transactional
     public RolUsuarioOrganizacionResponseDTO asignarRol(UUID idUsuario, UUID idOrganizacion, String rolString) {
         Usuario usuario = usuarioRepository.findById(idUsuario)
@@ -53,6 +55,7 @@ public class UserOrganizationRoleService {
                 });
     }
 
+    @Override
     @Transactional
     public RolUsuarioOrganizacionResponseDTO actualizarRol(UUID idUsuario, UUID idOrganizacion, String nuevoRolString, Boolean estaActivo) {
         RolUsuarioOrganizacion rolExistente = rolUsuarioOrganizacionRepository.findByUsuarioIdAndOrganizacionId(idUsuario, idOrganizacion)
@@ -66,6 +69,7 @@ public class UserOrganizationRoleService {
         return mapToRolUsuarioOrganizacionResponseDTO(rolUsuarioOrganizacionRepository.save(rolExistente));
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<RolUsuarioOrganizacionResponseDTO> obtenerMiembrosDeOrganizacion(UUID idOrganizacion) {
         return rolUsuarioOrganizacionRepository.findByOrganizacionId(idOrganizacion)
@@ -74,6 +78,7 @@ public class UserOrganizationRoleService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     @Transactional(readOnly = true)
     public RolUsuarioOrganizacionResponseDTO obtenerRolDeUsuarioEnOrganizacion(UUID idUsuario, UUID idOrganizacion) {
         RolUsuarioOrganizacion rol = rolUsuarioOrganizacionRepository.findByUsuarioIdAndOrganizacionId(idUsuario, idOrganizacion)

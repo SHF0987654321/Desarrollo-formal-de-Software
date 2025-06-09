@@ -5,8 +5,8 @@ import com.mercadeo.servicio.usuarios.dtos.organization.CrearOrganizacionRequest
 import com.mercadeo.servicio.usuarios.dtos.organization.OrganizacionResponseDTO;
 import com.mercadeo.servicio.usuarios.dtos.role.ActualizarRolRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.role.RolUsuarioOrganizacionResponseDTO;
-import com.mercadeo.servicio.usuarios.services.OrganizationService;
-import com.mercadeo.servicio.usuarios.services.UserOrganizationRoleService;
+import com.mercadeo.servicio.usuarios.services.interfaces.OrganizationServiceInterface;
+import com.mercadeo.servicio.usuarios.services.interfaces.UserOrganizationRoleServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,10 +21,10 @@ import java.util.UUID;
 @Validated
 public class OrganizacionController {
 
-    private final OrganizationService organizationService;
-    private final UserOrganizationRoleService userOrganizationRoleService;
+    private final OrganizationServiceInterface organizationService;
+    private final UserOrganizationRoleServiceInterface userOrganizationRoleService;
 
-    public OrganizacionController(OrganizationService organizationService, UserOrganizationRoleService userOrganizationRoleService) {
+    public OrganizacionController(OrganizationServiceInterface organizationService, UserOrganizationRoleServiceInterface userOrganizationRoleService) {
         this.organizationService = organizationService;
         this.userOrganizationRoleService = userOrganizationRoleService;
     }
@@ -53,7 +53,7 @@ public class OrganizacionController {
 
     @GetMapping("/mis-organizaciones")
     public ResponseEntity<List<OrganizacionResponseDTO>> obtenerMisOrganizaciones() {
-        // En un sistema real, el idUsuario se obtendría del contexto de seguridad (usuario autenticado)
+        // El idUsuario se obtendría del contexto de seguridad (usuario autenticado)
         UUID idUsuario = UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"); // Placeholder
         List<OrganizacionResponseDTO> response = organizationService.obtenerOrganizacionesPorUsuario(idUsuario);
         return new ResponseEntity<>(response, HttpStatus.OK);

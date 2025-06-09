@@ -4,7 +4,7 @@ import com.mercadeo.servicio.usuarios.dtos.auth.LoginRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.auth.LoginResponseDTO;
 import com.mercadeo.servicio.usuarios.dtos.auth.RegistroUsuarioRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.user.UsuarioResponseDTO;
-import com.mercadeo.servicio.usuarios.services.UserService;
+import com.mercadeo.servicio.usuarios.services.interfaces.UserServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,9 +17,9 @@ import javax.validation.Valid;
 @Validated
 public class AuthController {
 
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserServiceInterface userService) {
         this.userService = userService;
     }
 

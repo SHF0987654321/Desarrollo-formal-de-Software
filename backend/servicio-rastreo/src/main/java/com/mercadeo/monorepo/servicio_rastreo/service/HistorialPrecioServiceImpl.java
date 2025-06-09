@@ -8,6 +8,7 @@ import com.mercadeo.monorepo.servicio_rastreo.models.HistorialPrecio;
 import com.mercadeo.monorepo.servicio_rastreo.models.Listado;
 import com.mercadeo.monorepo.servicio_rastreo.repository.HistorialPrecioRepository;
 import com.mercadeo.monorepo.servicio_rastreo.repository.ListadoRepository;
+import com.ercadeo.monorepo.servicio_rastreo,service.interfaces.HistorialPrecioServiceInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,17 +19,18 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class HistorialPrecioService {
+public class HistorialPrecioServiceImpl implements HistorialPrecioServiceInterface {
 
     private final HistorialPrecioRepository historialPrecioRepository;
     private final ListadoRepository listadoRepository;
 
-    public HistorialPrecioService(HistorialPrecioRepository historialPrecioRepository, ListadoRepository listadoRepository) {
+    public HistorialPrecioServiceImpl(HistorialPrecioRepository historialPrecioRepository, ListadoRepository listadoRepository) {
         this.historialPrecioRepository = historialPrecioRepository;
         this.listadoRepository = listadoRepository;
     }
 
-    // Este método sería llamado internamente por el servicio de rastreadores
+    // Este método sera llamado internamente por el servicio de rastreadores
+    @Override
     @Transactional
     public HistorialPrecioResponseDTO registrarPrecio(UUID idListado, BigDecimal precioBase, BigDecimal precioDescuento,
                                                       BigDecimal porcentajeDescuento, BigDecimal costoEnvioEstimado,
@@ -71,6 +73,7 @@ public class HistorialPrecioService {
         return mapToHistorialPrecioResponseDTO(nuevoHistorial);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<HistorialPrecioResponseDTO> obtenerHistorialPorListado(UUID idListado) {
         Listado listado = listadoRepository.findById(idListado)
@@ -83,6 +86,7 @@ public class HistorialPrecioService {
     }
 
     // Método para obtener historial en un rango de fechas
+    @Override
     @Transactional(readOnly = true)
     public List<HistorialPrecioResponseDTO> obtenerHistorialPorListadoYRangoFechas(UUID idListado, LocalDateTime start, LocalDateTime end) {
         Listado listado = listadoRepository.findById(idListado)

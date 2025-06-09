@@ -10,6 +10,7 @@ import com.mercadeo.servicio.usuarios.exception.BadRequestException;
 import com.mercadeo.servicio.usuarios.exception.ResourceNotFoundException;
 import com.mercadeo.servicio.usuarios.models.Usuario;
 import com.mercadeo.servicio.usuarios.repository.UsuarioRepository;
+import com.mercadeo.servicio.usuarios.services.interfaces.UserServiceInterface;
 import com.mercadeo.servicio.usuarios.util.JwtUtil; // Asumiendo que tienes una clase JwtUtil
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,18 +20,19 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserServiceInterface {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil; // Para la generación de tokens
 
-    public UserService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public UserServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
     }
 
+    @Override
     @Transactional
     public UsuarioResponseDTO registrarUsuario(RegistroUsuarioRequestDTO request) {
         if (usuarioRepository.findByCorreoElectronico(request.getCorreoElectronico()).isPresent()) {
@@ -46,6 +48,7 @@ public class UserService {
         return mapToUsuarioResponseDTO(nuevoUsuario);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public LoginResponseDTO autenticarUsuario(LoginRequestDTO request) {
         Usuario usuario = usuarioRepository.findByCorreoElectronico(request.getCorreoElectronico())
@@ -65,6 +68,7 @@ public class UserService {
         return response;
     }
 
+    @Override
     @Transactional(readOnly = true)
     public UsuarioResponseDTO obtenerUsuarioPorId(UUID id) {
         Usuario usuario = usuarioRepository.findById(id)
@@ -72,6 +76,7 @@ public class UserService {
         return mapToUsuarioResponseDTO(usuario);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public UsuarioResponseDTO obtenerUsuarioPorCorreo(String correo) {
         Usuario usuario = usuarioRepository.findByCorreoElectronico(correo)
@@ -79,6 +84,7 @@ public class UserService {
         return mapToUsuarioResponseDTO(usuario);
     }
 
+    @Override
     @Transactional
     public UsuarioResponseDTO actualizarContrasena(UUID idUsuario, PasswordUpdateRequestDTO request) {
         Usuario usuario = usuarioRepository.findById(idUsuario)
@@ -93,6 +99,7 @@ public class UserService {
         return mapToUsuarioResponseDTO(updatedUser);
     }
 
+    @Override
     @Transactional
     public UsuarioResponseDTO actualizarPerfilUsuario(UUID idUsuario, ActualizarUsuarioRequestDTO request) {
         Usuario usuario = usuarioRepository.findById(idUsuario)

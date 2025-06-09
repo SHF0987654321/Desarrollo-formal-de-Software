@@ -3,7 +3,7 @@ package com.mercadeo.monorepo.servicio_rastreo.controller;
 import com.mercadeo.monorepo.servicio_rastreo.dtos.alerta.ActualizarAlertaRequestDTO;
 import com.mercadeo.monorepo.servicio_rastreo.dtos.alerta.CrearAlertaRequestDTO;
 import com.mercadeo.monorepo.servicio_rastreo.dtos.alerta.AlertaResponseDTO;
-import com.mercadeo.monorepo.servicio_rastreo.service.AlertaService;
+import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.AlertaServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,9 +18,9 @@ import java.util.UUID;
 @Validated
 public class AlertaController {
 
-    private final AlertaService alertaService;
+    private final AlertaServiceInterface alertaService;
 
-    public AlertaController(AlertaService alertaService) {
+    public AlertaController(AlertaServiceInterface alertaService) {
         this.alertaService = alertaService;
     }
 

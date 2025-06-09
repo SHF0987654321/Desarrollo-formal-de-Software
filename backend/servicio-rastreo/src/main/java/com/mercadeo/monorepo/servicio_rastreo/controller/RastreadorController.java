@@ -3,7 +3,7 @@ package com.mercadeo.monorepo.servicio_rastreo.controller;
 import com.mercadeo.monorepo.servicio_rastreo.dtos.rastreador.ActualizarRastreadorRequestDTO;
 import com.mercadeo.monorepo.servicio_rastreo.dtos.rastreador.CrearRastreadorRequestDTO;
 import com.mercadeo.monorepo.servicio_rastreo.dtos.rastreador.RastreadorResponseDTO;
-import com.mercadeo.monorepo.servicio_rastreo.service.RastreadorService;
+import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.RastreadorServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,9 +18,9 @@ import java.util.UUID;
 @Validated
 public class RastreadorController {
 
-    private final RastreadorService rastreadorService;
+    private final RastreadorServiceInterface rastreadorService;
 
-    public RastreadorController(RastreadorService rastreadorService) {
+    public RastreadorController(RastreadorServiceInterface rastreadorService) {
         this.rastreadorService = rastreadorService;
     }
 

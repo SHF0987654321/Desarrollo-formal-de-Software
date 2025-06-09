@@ -3,7 +3,7 @@ package com.mercadeo.monorepo.servicio_rastreo.controller;
 import com.mercadeo.monorepo.servicio_rastreo.dtos.producto.ActualizarProductoRequestDTO;
 import com.mercadeo.monorepo.servicio_rastreo.dtos.producto.CrearProductoRequestDTO;
 import com.mercadeo.monorepo.servicio_rastreo.dtos.producto.ProductoResponseDTO;
-import com.mercadeo.monorepo.servicio_rastreo.service.ProductoService;
+import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.ProductoServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,9 +18,9 @@ import java.util.UUID;
 @Validated
 public class ProductoController {
 
-    private final ProductoService productoService;
+    private final ProductoServiceInterface productoService;
 
-    public ProductoController(ProductoService productoService) {
+    public ProductoController(ProductoServiceInterface productoService) {
         this.productoService = productoService;
     }
 

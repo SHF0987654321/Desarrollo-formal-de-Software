@@ -8,6 +8,7 @@ import com.mercadeo.monorepo.servicio_rastreo.exception.BadRequestException;
 import com.mercadeo.monorepo.servicio_rastreo.exception.ResourceNotFoundException;
 import com.mercadeo.monorepo.servicio_rastreo.models.Producto;
 import com.mercadeo.monorepo.servicio_rastreo.repository.ProductoRepository;
+import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.ProductoServiceInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,17 +17,18 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductoService {
+public class ProductoServiceImpl implements ProductoServiceInterface {
 
     private final ProductoRepository productoRepository;
     // Asumimos que hay un servicio para validar la existencia de la organización
     // private final OrganizationService organizationService;
 
-    public ProductoService(ProductoRepository productoRepository /*, OrganizationService organizationService*/) {
+    public ProductoServiceImpl(ProductoRepository productoRepository /*, OrganizationService organizationService*/) {
         this.productoRepository = productoRepository;
         // this.organizationService = organizationService;
     }
 
+    @Override
     @Transactional
     public ProductoResponseDTO crearProducto(CrearProductoRequestDTO request, UUID idUsuarioCreador) {
         // Validar que la organización exista (llamada a microservicio de usuarios)
@@ -45,6 +47,7 @@ public class ProductoService {
         return mapToProductoResponseDTO(nuevoProducto);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public ProductoResponseDTO obtenerProductoPorId(UUID id) {
         Producto producto = productoRepository.findById(id)
@@ -52,6 +55,7 @@ public class ProductoService {
         return mapToProductoResponseDTO(producto);
     }
 
+    @Override
     @Transactional
     public ProductoResponseDTO actualizarProducto(UUID id, ActualizarProductoRequestDTO request) {
         Producto producto = productoRepository.findById(id)
@@ -73,6 +77,7 @@ public class ProductoService {
         return mapToProductoResponseDTO(updatedProducto);
     }
 
+    @Override
     @Transactional
     public void eliminarProducto(UUID id) {
         Producto producto = productoRepository.findById(id)
@@ -80,6 +85,7 @@ public class ProductoService {
         productoRepository.delete(producto);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<ProductoResponseDTO> obtenerProductosPorOrganizacion(UUID idOrganizacion) {
         return productoRepository.findByIdOrganizacion(idOrganizacion)

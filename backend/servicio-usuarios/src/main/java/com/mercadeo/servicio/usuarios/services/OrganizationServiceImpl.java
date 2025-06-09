@@ -14,6 +14,7 @@ import com.mercadeo.servicio.usuarios.models.Usuario;
 import com.mercadeo.servicio.usuarios.repository.OrganizacionRepository;
 import com.mercadeo.servicio.usuarios.repository.RolUsuarioOrganizacionRepository;
 import com.mercadeo.servicio.usuarios.repository.UsuarioRepository;
+import com.mercadeo.servicio.usuarios.services.interfaces.OrganizationServiceInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,18 +24,19 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class OrganizationService {
+public class OrganizationServiceImpl implements OrganizationServiceInterface {
 
     private final OrganizacionRepository organizacionRepository;
     private final UsuarioRepository usuarioRepository;
     private final RolUsuarioOrganizacionRepository rolUsuarioOrganizacionRepository;
 
-    public OrganizationService(OrganizacionRepository organizacionRepository, UsuarioRepository usuarioRepository, RolUsuarioOrganizacionRepository rolUsuarioOrganizacionRepository) {
+    public OrganizationServiceImpl(OrganizacionRepository organizacionRepository, UsuarioRepository usuarioRepository, RolUsuarioOrganizacionRepository rolUsuarioOrganizacionRepository) {
         this.organizacionRepository = organizacionRepository;
         this.usuarioRepository = usuarioRepository;
         this.rolUsuarioOrganizacionRepository = rolUsuarioOrganizacionRepository;
     }
 
+    @Override
     @Transactional
     public OrganizacionResponseDTO crearOrganizacion(CrearOrganizacionRequestDTO request, UUID idUsuarioPropietario) {
         Usuario propietario = usuarioRepository.findById(idUsuarioPropietario)
@@ -72,6 +74,7 @@ public class OrganizationService {
         return mapToOrganizacionResponseDTO(nuevaOrganizacion);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public OrganizacionResponseDTO obtenerOrganizacionPorId(UUID id) {
         Organizacion organizacion = organizacionRepository.findById(id)
@@ -79,6 +82,7 @@ public class OrganizationService {
         return mapToOrganizacionResponseDTO(organizacion);
     }
 
+    @Override
     @Transactional
     public OrganizacionResponseDTO actualizarOrganizacion(UUID idOrganizacion, ActualizarOrganizacionRequestDTO request) {
         Organizacion organizacion = organizacionRepository.findById(idOrganizacion)
@@ -102,6 +106,7 @@ public class OrganizationService {
         return mapToOrganizacionResponseDTO(updatedOrganizacion);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<OrganizacionResponseDTO> obtenerOrganizacionesPorUsuario(UUID idUsuario) {
         // Obtener todas las relaciones de roles para este usuario

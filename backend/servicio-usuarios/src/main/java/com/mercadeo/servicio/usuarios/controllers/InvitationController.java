@@ -3,7 +3,7 @@ package com.mercadeo.servicio.usuarios.controllers;
 import com.mercadeo.servicio.usuarios.dtos.invitation.AceptarRechazarInvitacionRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.invitation.EnviarInvitacionRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.invitation.InvitacionResponseDTO;
-import com.mercadeo.servicio.usuarios.services.InvitacionService;
+import com.mercadeo.servicio.usuarios.services.InvitacionServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,9 +18,9 @@ import java.util.UUID;
 @Validated
 public class InvitacionController {
 
-    private final InvitacionService invitacionService;
+    private final InvitacionServiceInterface invitacionService;
 
-    public InvitacionController(InvitacionService invitacionService) {
+    public InvitacionController(InvitacionServiceInterface invitacionService) {
         this.invitacionService = invitacionService;
     }
 

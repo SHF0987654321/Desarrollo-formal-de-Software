@@ -3,7 +3,7 @@ package com.mercadeo.servicio.usuarios.controllers;
 import com.mercadeo.servicio.usuarios.dtos.user.ActualizarUsuarioRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.user.PasswordUpdateRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.user.UsuarioResponseDTO;
-import com.mercadeo.servicio.usuarios.services.UserService;
+import com.mercadeo.servicio.usuarios.services.interfaces.UserServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,9 +17,9 @@ import java.util.UUID;
 @Validated
 public class UsuarioController {
 
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
-    public UsuarioController(UserService userService) {
+    public UsuarioController(UserServiceInterface userService) {
         this.userService = userService;
     }
 

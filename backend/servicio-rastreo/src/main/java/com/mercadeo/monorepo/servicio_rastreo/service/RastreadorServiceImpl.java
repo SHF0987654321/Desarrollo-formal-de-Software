@@ -10,6 +10,7 @@ import com.mercadeo.monorepo.servicio_rastreo.models.Listado;
 import com.mercadeo.monorepo.servicio_rastreo.models.Rastreador;
 import com.mercadeo.monorepo.servicio_rastreo.repository.ListadoRepository;
 import com.mercadeo.monorepo.servicio_rastreo.repository.RastreadorRepository;
+import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.RastreadorServiceInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class RastreadorService {
+public class RastreadorServiceImpl implements RastreadorServiceInterface {
 
     private final RastreadorRepository rastreadorRepository;
     private final ListadoRepository listadoRepository;
@@ -32,6 +33,7 @@ public class RastreadorService {
         // this.userService = userService;
     }
 
+    @Override
     @Transactional
     public RastreadorResponseDTO crearRastreador(CrearRastreadorRequestDTO request) {
         Listado listado = listadoRepository.findById(request.getIdListado())
@@ -55,6 +57,7 @@ public class RastreadorService {
         return mapToRastreadorResponseDTO(nuevoRastreador);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public RastreadorResponseDTO obtenerRastreadorPorId(UUID id) {
         Rastreador rastreador = rastreadorRepository.findById(id)
@@ -62,6 +65,7 @@ public class RastreadorService {
         return mapToRastreadorResponseDTO(rastreador);
     }
 
+    @Override
     @Transactional
     public RastreadorResponseDTO actualizarRastreador(UUID id, ActualizarRastreadorRequestDTO request) {
         Rastreador rastreador = rastreadorRepository.findById(id)
@@ -93,6 +97,7 @@ public class RastreadorService {
         return mapToRastreadorResponseDTO(updatedRastreador);
     }
 
+    @Override
     @Transactional
     public void eliminarRastreador(UUID id) {
         Rastreador rastreador = rastreadorRepository.findById(id)
@@ -100,6 +105,7 @@ public class RastreadorService {
         rastreadorRepository.delete(rastreador);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<RastreadorResponseDTO> obtenerRastreadoresPorUsuario(UUID idUsuarioConfigurador) {
         return rastreadorRepository.findByIdUsuarioConfigurador(idUsuarioConfigurador)
@@ -108,6 +114,7 @@ public class RastreadorService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<RastreadorResponseDTO> obtenerRastreadoresPorListado(UUID idListado) {
         return rastreadorRepository.findByListadoId(idListado)
