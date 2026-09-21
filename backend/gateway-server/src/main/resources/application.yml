@@ -16,11 +16,15 @@ spring:
         - id: servicio-usuarios
           uri: lb://SERVICIO-USUARIOS # ← Nombre del servicio registrado en Eureka
           predicates:
-            - Path=/api/usuarios/**
+            - Path=/api/auth/**,/api/usuarios/**,/api/organizaciones/**,/api/invitaciones/**
+        - id: servicio-rastreo
+          uri: lb://SERVICIO-RASTREO
+          predicates:
+            - Path=/api/productos/**,/api/listados/**,/api/rastreadores/**,/api/historial-precios/**,/api/alertas/**
             
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
   instance:
-    instance-id: $(spring.application.name):${random.value} # ← Nombre de la instancia del Gateway
+    instance-id: ${spring.application.name}:${random.value} # ← Nombre de la instancia del Gateway
