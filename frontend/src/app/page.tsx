@@ -8,11 +8,9 @@ import {
   Mail,
   MapPin,
   Phone,
-  Facebook,
-  Twitter,
-  Linkedin,
   ChevronDown,
 } from "lucide-react"
+import { FacebookIcon, LinkedinIcon, TwitterIcon } from "@/components/SocialIcons"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -328,19 +326,19 @@ export default function Component() {
                   href="#"
                   className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
                 >
-                  <Facebook className="w-5 h-5" />
+                  <FacebookIcon className="w-5 h-5" />
                 </Link>
                 <Link
                   href="#"
                   className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
                 >
-                  <Twitter className="w-5 h-5" />
+                  <TwitterIcon className="w-5 h-5" />
                 </Link>
                 <Link
                   href="#"
                   className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
                 >
-                  <Linkedin className="w-5 h-5" />
+                  <LinkedinIcon className="w-5 h-5" />
                 </Link>
               </div>
             </div>
