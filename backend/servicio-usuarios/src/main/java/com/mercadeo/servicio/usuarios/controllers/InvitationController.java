@@ -3,7 +3,7 @@ package com.mercadeo.servicio.usuarios.controllers;
 import com.mercadeo.servicio.usuarios.dtos.invitation.AceptarRechazarInvitacionRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.invitation.EnviarInvitacionRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.invitation.InvitacionResponseDTO;
-import com.mercadeo.servicio.usuarios.services.InvitacionServiceInterface;
+import com.mercadeo.servicio.usuarios.services.interfaces.InvitacionServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
