@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Obtener la URL del API Gateway desde las variables de entorno
-const API_GATEWAY_URL = process.env.NEXT_PUBLIC_API_GATEWAY_URL;
+const API_GATEWAY_URL = process.env.NEXT_PUBLIC_API_GATEWAY_URL || 'http://localhost:8080';
 
 // Crear una instancia de Axios
 const api = axios.create({
@@ -14,8 +14,8 @@ const api = axios.create({
 // Interceptor para añadir el token JWT a cada solicitud
 api.interceptors.request.use(
   (config) => {
-    // Obtener el token del localStorage (o de donde lo almacenes)
-    const token = localStorage.getItem('accessToken');
+    // Obtener el token del localStorage (solo en cliente, Next.js hace SSR)
+    const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -35,7 +35,9 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       console.error('Unauthorized request. Redirecting to login...');
       // Implementar una lógica para limpiar el token y redirigir
-      localStorage.removeItem('accessToken'); window.location.href = '/auth/login';
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('accessToken'); window.location.href = '/auth/login';
+      }
     }
     return Promise.reject(error);
   }
