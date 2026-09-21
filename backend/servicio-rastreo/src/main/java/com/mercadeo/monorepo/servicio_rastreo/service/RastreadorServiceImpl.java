@@ -27,7 +27,7 @@ public class RastreadorServiceImpl implements RastreadorServiceInterface {
     // Asumimos que hay un servicio para obtener el nombre del usuario
     // private final UserService userService;
 
-    public RastreadorService(RastreadorRepository rastreadorRepository, ListadoRepository listadoRepository /*, UserService userService*/) {
+    public RastreadorServiceImpl(RastreadorRepository rastreadorRepository, ListadoRepository listadoRepository /*, UserService userService*/) {
         this.rastreadorRepository = rastreadorRepository;
         this.listadoRepository = listadoRepository;
         // this.userService = userService;

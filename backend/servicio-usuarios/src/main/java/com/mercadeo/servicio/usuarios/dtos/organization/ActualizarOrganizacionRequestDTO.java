@@ -1,8 +1,8 @@
 package com.mercadeo.servicio.usuarios.dtos.organization;
 
 import lombok.Data;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Email;
 
 @Data
 public class ActualizarOrganizacionRequestDTO {

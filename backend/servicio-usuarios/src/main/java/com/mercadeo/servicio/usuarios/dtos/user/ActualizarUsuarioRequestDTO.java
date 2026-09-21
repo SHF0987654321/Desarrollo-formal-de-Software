@@ -1,7 +1,7 @@
 package com.mercadeo.servicio.usuarios.dtos.user;
 
 import lombok.Data;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 @Data
 public class ActualizarUsuarioRequestDTO {

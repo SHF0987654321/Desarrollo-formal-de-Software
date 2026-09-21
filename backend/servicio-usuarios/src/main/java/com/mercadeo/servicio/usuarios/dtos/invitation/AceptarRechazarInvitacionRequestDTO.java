@@ -1,9 +1,9 @@
 package com.mercadeo.servicio.usuarios.dtos.invitation;
 
 import lombok.Data;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import java.util.UUID;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Pattern;
 
 @Data
 public class AceptarRechazarInvitacionRequestDTO {

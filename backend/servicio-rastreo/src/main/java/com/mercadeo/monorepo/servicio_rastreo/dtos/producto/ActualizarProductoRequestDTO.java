@@ -1,7 +1,7 @@
 package com.mercadeo.monorepo.servicio_rastreo.dtos.producto;
 
 import lombok.Data;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Data

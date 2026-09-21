@@ -9,17 +9,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/usuarios")
 @Validated
-public class UsuarioController {
+public class UserController {
 
     private final UserServiceInterface userService;
 
-    public UsuarioController(UserServiceInterface userService) {
+    public UserController(UserServiceInterface userService) {
         this.userService = userService;
     }
 
