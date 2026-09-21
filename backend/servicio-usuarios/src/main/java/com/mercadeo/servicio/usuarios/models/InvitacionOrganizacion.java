@@ -11,8 +11,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.oho.userservice.enums.EstadoInvitacion;
-import com.oho.userservice.enums.RolUsuarioOrganizacion;
+import com.mercadeo.servicio.usuarios.enums.State_Organization_invitation;
+import com.mercadeo.servicio.usuarios.enums.State_Members_Organization;
 
 @Entity
 @Table(name = "invitaciones_organizacion")
@@ -40,14 +40,14 @@ public class InvitacionOrganizacion {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "rol", nullable = false)
-    private RolUsuarioOrganizacion rol;
+    private State_Members_Organization rol;
 
     @Column(name = "token", unique = true, nullable = false)
     private UUID token;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
-    private EstadoInvitacion estado = EstadoInvitacion.PENDIENTE;
+    private State_Organization_invitation estado = State_Organization_invitation.PENDIENTE;
 
     @Column(name = "expira_en", nullable = false)
     private LocalDateTime expiraEn;

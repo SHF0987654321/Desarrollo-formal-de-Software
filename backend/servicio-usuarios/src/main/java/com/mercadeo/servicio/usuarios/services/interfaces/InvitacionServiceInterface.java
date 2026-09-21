@@ -1,8 +1,8 @@
 package com.mercadeo.servicio.usuarios.services.interfaces;
 
-import com.mercadeo.servicio.usuarios.services.dtos.invitation.AceptarRechazarInvitacionRequestDTO;
-import com.mercadeo.servicio.usuarios.services.dtos.invitation.EnviarInvitacionRequestDTO;
-import com.mercadeo.servicio.usuarios.services.dtos.invitation.InvitacionResponseDTO;
+import com.mercadeo.servicio.usuarios.dtos.invitation.AceptarRechazarInvitacionRequestDTO;
+import com.mercadeo.servicio.usuarios.dtos.invitation.EnviarInvitacionRequestDTO;
+import com.mercadeo.servicio.usuarios.dtos.invitation.InvitacionResponseDTO;
 
 import java.util.List;
 import java.util.UUID;

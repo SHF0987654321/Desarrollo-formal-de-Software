@@ -11,7 +11,7 @@ import com.mercadeo.monorepo.servicio_rastreo.models.Listado;
 import com.mercadeo.monorepo.servicio_rastreo.models.Producto;
 import com.mercadeo.monorepo.servicio_rastreo.repository.ListadoRepository;
 import com.mercadeo.monorepo.servicio_rastreo.repository.ProductoRepository;
-import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.ListadoServiceInterface
+import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.ListadoServiceInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

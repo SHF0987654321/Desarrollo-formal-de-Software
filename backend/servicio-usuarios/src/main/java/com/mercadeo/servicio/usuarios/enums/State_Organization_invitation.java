@@ -1,5 +1,5 @@
-pakage com.mercadeo.servicio.usuarios.enums;
+package com.mercadeo.servicio.usuarios.enums;
 
-public enum State_Members_Organization {
+public enum State_Organization_invitation {
     PENDIENTE, ACEPTADA, RECHAZADA, EXPIRADA
 }

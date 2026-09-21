@@ -1,7 +1,7 @@
 package com.mercadeo.servicio.usuarios.services;
 
 import com.mercadeo.servicio.usuarios.dtos.role.RolUsuarioOrganizacionResponseDTO;
-import com.mercadeo.servicio.usuarios.enums.RolUsuarioOrganizacion;
+import com.mercadeo.servicio.usuarios.enums.State_Members_Organization;
 import com.mercadeo.servicio.usuarios.exception.BadRequestException;
 import com.mercadeo.servicio.usuarios.exception.ResourceNotFoundException;
 import com.mercadeo.servicio.usuarios.models.Organizacion;
@@ -19,7 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class UserOrganizationRoleServiceImpl implements UserOrganizationRoleService {
+public class UserOrganizationRoleServiceImpl implements UserOrganizationRoleServiceInterface {
 
     private final RolUsuarioOrganizacionRepository rolUsuarioOrganizacionRepository;
     private final UsuarioRepository usuarioRepository;
@@ -39,20 +39,17 @@ public class UserOrganizationRoleServiceImpl implements UserOrganizationRoleServ
         Organizacion organizacion = organizacionRepository.findById(idOrganizacion)
                 .orElseThrow(() -> new ResourceNotFoundException("Organización", "id", idOrganizacion));
 
-        RolUsuarioOrganizacion rolEnum = RolUsuarioOrganizacion.valueOf(rolString);
+        State_Members_Organization rolEnum = State_Members_Organization.valueOf(rolString);
 
-        return rolUsuarioOrganizacionRepository.findByUsuarioIdAndOrganizacionId(idUsuario, idOrganizacion)
-                .map(existingRol -> {
-                    throw new BadRequestException("El usuario ya tiene un rol asignado en esta organización.");
-                })
-                .orElseGet(() -> {
-                    RolUsuarioOrganizacion nuevoRol = new RolUsuarioOrganizacion();
-                    nuevoRol.setUsuario(usuario);
-                    nuevoRol.setOrganizacion(organizacion);
-                    nuevoRol.setRol(rolEnum);
-                    nuevoRol.setEstaActivo(true);
-                    return mapToRolUsuarioOrganizacionResponseDTO(rolUsuarioOrganizacionRepository.save(nuevoRol));
-                });
+        if (rolUsuarioOrganizacionRepository.findByUsuarioIdAndOrganizacionId(idUsuario, idOrganizacion).isPresent()) {
+            throw new BadRequestException("El usuario ya tiene un rol asignado en esta organización.");
+        }
+        RolUsuarioOrganizacion nuevoRol = new RolUsuarioOrganizacion();
+        nuevoRol.setUsuario(usuario);
+        nuevoRol.setOrganizacion(organizacion);
+        nuevoRol.setRol(rolEnum);
+        nuevoRol.setEstaActivo(true);
+        return mapToRolUsuarioOrganizacionResponseDTO(rolUsuarioOrganizacionRepository.save(nuevoRol));
     }
 
     @Override
@@ -61,7 +58,7 @@ public class UserOrganizationRoleServiceImpl implements UserOrganizationRoleServ
         RolUsuarioOrganizacion rolExistente = rolUsuarioOrganizacionRepository.findByUsuarioIdAndOrganizacionId(idUsuario, idOrganizacion)
                 .orElseThrow(() -> new ResourceNotFoundException("Rol de usuario en organización", "usuarioId y organizacionId", idUsuario + " - " + idOrganizacion));
 
-        RolUsuarioOrganizacion nuevoRolEnum = RolUsuarioOrganizacion.valueOf(nuevoRolString);
+        State_Members_Organization nuevoRolEnum = State_Members_Organization.valueOf(nuevoRolString);
 
         rolExistente.setRol(nuevoRolEnum);
         rolExistente.setEstaActivo(estaActivo);

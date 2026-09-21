@@ -1,4 +1,4 @@
-pakage  com.mercadeo.servicio.usuarios.models;
+package  com.mercadeo.servicio.usuarios.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

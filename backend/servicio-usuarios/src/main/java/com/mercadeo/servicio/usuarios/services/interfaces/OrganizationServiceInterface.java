@@ -1,8 +1,8 @@
 package com.mercadeo.servicio.usuarios.services.interfaces;
 
-import com.mercadeo.servicio.usuarios.services.dtos.organization.ActualizarOrganizacionRequestDTO;
-import com.mercadeo.servicio.usuarios.services.dtos.organization.CrearOrganizacionRequestDTO;
-import com.mercadeo.servicio.usuarios.services.dtos.organization.OrganizacionResponseDTO;
+import com.mercadeo.servicio.usuarios.dtos.organization.ActualizarOrganizacionRequestDTO;
+import com.mercadeo.servicio.usuarios.dtos.organization.CrearOrganizacionRequestDTO;
+import com.mercadeo.servicio.usuarios.dtos.organization.OrganizacionResponseDTO;
 
 import java.util.List;
 import java.util.UUID;

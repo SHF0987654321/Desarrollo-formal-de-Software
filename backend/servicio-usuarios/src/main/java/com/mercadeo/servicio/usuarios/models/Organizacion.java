@@ -12,11 +12,12 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.Set;
 
-import com.oho.userservice.enums.EstadoOrganizacion;
+import com.mercadeo.servicio.usuarios.enums.State_Organization;
 
 @Entity
 @Table(name = "organizaciones", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"id_fiscal", "codigo_pais_id_fiscal"}, name = "uq_id_fiscal_pais", condition = "es_empresa_formal = TRUE")
+    // TODO: índice parcial (es_empresa_formal = TRUE) vía migración Flyway, no soportado por Jakarta UniqueConstraint
+    @UniqueConstraint(columnNames = {"id_fiscal", "codigo_pais_id_fiscal"}, name = "uq_id_fiscal_pais")
 })
 @Data
 @NoArgsConstructor
@@ -71,7 +72,7 @@ public class Organizacion {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
-    private EstadoOrganizacion estado = EstadoOrganizacion.ACTIVA;
+    private State_Organization estado = State_Organization.ACTIVA;
 
     @CreationTimestamp
     @Column(name = "fecha_creacion", nullable = false, updatable = false)

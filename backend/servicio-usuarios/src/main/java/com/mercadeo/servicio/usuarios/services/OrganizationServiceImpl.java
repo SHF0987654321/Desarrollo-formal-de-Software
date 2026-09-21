@@ -4,8 +4,8 @@ import com.mercadeo.servicio.usuarios.dtos.organization.ActualizarOrganizacionRe
 import com.mercadeo.servicio.usuarios.dtos.organization.CrearOrganizacionRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.organization.OrganizacionResponseDTO;
 import com.mercadeo.servicio.usuarios.dtos.role.RolUsuarioOrganizacionResponseDTO;
-import com.mercadeo.servicio.usuarios.enums.EstadoOrganizacion;
-import com.mercadeo.servicio.usuarios.enums.RolUsuarioOrganizacion;
+import com.mercadeo.servicio.usuarios.enums.State_Organization;
+import com.mercadeo.servicio.usuarios.enums.State_Members_Organization;
 import com.mercadeo.servicio.usuarios.exception.BadRequestException;
 import com.mercadeo.servicio.usuarios.exception.ResourceNotFoundException;
 import com.mercadeo.servicio.usuarios.models.Organizacion;
@@ -59,7 +59,7 @@ public class OrganizationServiceImpl implements OrganizationServiceInterface {
         organizacion.setCorreoContacto(request.getCorreoContacto());
         organizacion.setTelefonoContacto(request.getTelefonoContacto());
         organizacion.setDominio(request.getDominio());
-        organizacion.setEstado(EstadoOrganizacion.ACTIVA); // Estado inicial
+        organizacion.setEstado(State_Organization.ACTIVA); // Estado inicial
 
         Organizacion nuevaOrganizacion = organizacionRepository.save(organizacion);
 
@@ -67,7 +67,7 @@ public class OrganizationServiceImpl implements OrganizationServiceInterface {
         RolUsuarioOrganizacion rolPropietario = new RolUsuarioOrganizacion();
         rolPropietario.setUsuario(propietario);
         rolPropietario.setOrganizacion(nuevaOrganizacion);
-        rolPropietario.setRol(RolUsuarioOrganizacion.PROPIETARIO);
+        rolPropietario.setRol(State_Members_Organization.PROPIETARIO);
         rolPropietario.setEstaActivo(true);
         rolUsuarioOrganizacionRepository.save(rolPropietario);
 

@@ -1,11 +1,11 @@
 package com.mercadeo.servicio.usuarios.services.interfaces;
 
-import com.mercadeo.servicio.usuarios.services.dtos.auth.LoginRequestDTO;
-import com.mercadeo.servicio.usuarios.services.dtos.auth.LoginResponseDTO;
-import com.mercadeo.servicio.usuarios.services.dtos.auth.RegistroUsuarioRequestDTO;
-import com.mercadeo.servicio.usuarios.services.dtos.user.ActualizarUsuarioRequestDTO;
-import com.mercadeo.servicio.usuarios.services.dtos.user.PasswordUpdateRequestDTO;
-import com.mercadeo.servicio.usuarios.services.dtos.user.UsuarioResponseDTO;
+import com.mercadeo.servicio.usuarios.dtos.auth.LoginRequestDTO;
+import com.mercadeo.servicio.usuarios.dtos.auth.LoginResponseDTO;
+import com.mercadeo.servicio.usuarios.dtos.auth.RegistroUsuarioRequestDTO;
+import com.mercadeo.servicio.usuarios.dtos.user.ActualizarUsuarioRequestDTO;
+import com.mercadeo.servicio.usuarios.dtos.user.PasswordUpdateRequestDTO;
+import com.mercadeo.servicio.usuarios.dtos.user.UsuarioResponseDTO;
 
 import java.util.UUID;
 

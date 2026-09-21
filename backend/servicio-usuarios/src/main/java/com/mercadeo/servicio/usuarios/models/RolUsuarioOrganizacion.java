@@ -11,7 +11,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.oho.userservice.enums.RolUsuarioOrganizacion;
+import com.mercadeo.servicio.usuarios.enums.State_Members_Organization;
 
 @Entity
 @Table(name = "roles_usuario_organizacion", uniqueConstraints = {
@@ -38,7 +38,7 @@ public class RolUsuarioOrganizacion {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "rol", nullable = false)
-    private RolUsuarioOrganizacion rol;
+    private State_Members_Organization rol;
 
     @Column(name = "esta_activo", nullable = false)
     private Boolean estaActivo = true;

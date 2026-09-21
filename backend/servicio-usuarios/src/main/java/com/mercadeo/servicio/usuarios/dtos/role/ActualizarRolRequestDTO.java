@@ -1,4 +1,4 @@
-package com.mercadeo.servicio.usuarios.dtos.invitation;
+package com.mercadeo.servicio.usuarios.dtos.role;
 
 import lombok.Data;
 import jakarta.validation.constraints.NotBlank;

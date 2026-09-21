@@ -8,7 +8,7 @@ import com.mercadeo.monorepo.servicio_rastreo.models.HistorialPrecio;
 import com.mercadeo.monorepo.servicio_rastreo.models.Listado;
 import com.mercadeo.monorepo.servicio_rastreo.repository.HistorialPrecioRepository;
 import com.mercadeo.monorepo.servicio_rastreo.repository.ListadoRepository;
-import com.ercadeo.monorepo.servicio_rastreo,service.interfaces.HistorialPrecioServiceInterface;
+import com.mercadeo.monorepo.servicio_rastreo.service.interfaces.HistorialPrecioServiceInterface;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

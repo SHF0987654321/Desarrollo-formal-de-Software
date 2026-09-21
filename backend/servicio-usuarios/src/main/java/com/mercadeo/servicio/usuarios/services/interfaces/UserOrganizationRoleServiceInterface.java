@@ -1,4 +1,6 @@
-import com.mercadeo.servicio.usuarios.services.dtos.role.RolUsuarioOrganizacionResponseDTO;
+package com.mercadeo.servicio.usuarios.services.interfaces;
+
+import com.mercadeo.servicio.usuarios.dtos.role.RolUsuarioOrganizacionResponseDTO;
 
 import java.util.List;
 import java.util.UUID;

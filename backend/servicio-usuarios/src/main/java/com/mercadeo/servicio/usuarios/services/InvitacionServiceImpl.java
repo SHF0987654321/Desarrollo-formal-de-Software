@@ -3,8 +3,8 @@ package com.mercadeo.servicio.usuarios.services;
 import com.mercadeo.servicio.usuarios.dtos.invitation.AceptarRechazarInvitacionRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.invitation.EnviarInvitacionRequestDTO;
 import com.mercadeo.servicio.usuarios.dtos.invitation.InvitacionResponseDTO;
-import com.mercadeo.servicio.usuarios.enums.EstadoInvitacion;
-import com.mercadeo.servicio.usuarios.enums.RolUsuarioOrganizacion;
+import com.mercadeo.servicio.usuarios.enums.State_Organization_invitation;
+import com.mercadeo.servicio.usuarios.enums.State_Members_Organization;
 import com.mercadeo.servicio.usuarios.exception.BadRequestException;
 import com.mercadeo.servicio.usuarios.exception.ResourceNotFoundException;
 import com.mercadeo.servicio.usuarios.exception.UnauthorizedException;
@@ -56,7 +56,7 @@ public class InvitacionServiceImpl implements InvitacionServiceInterface {
         RolUsuarioOrganizacion rolInvitador = rolUsuarioOrganizacionRepository.findByUsuarioIdAndOrganizacionId(idUsuarioInvitador, idOrganizacion)
                 .orElseThrow(() -> new UnauthorizedException("El usuario no pertenece a esta organización."));
 
-        if (rolInvitador.getRol() != RolUsuarioOrganizacion.ADMINISTRADOR && rolInvitador.getRol() != RolUsuarioOrganizacion.PROPIETARIO) {
+        if (rolInvitador.getRol() != State_Members_Organization.ADMINISTRADOR && rolInvitador.getRol() != State_Members_Organization.PROPIETARIO) {
             throw new UnauthorizedException("No tienes permisos para invitar miembros a esta organización.");
         }
 
@@ -69,9 +69,9 @@ public class InvitacionServiceImpl implements InvitacionServiceInterface {
         invitacion.setOrganizacion(organizacion);
         invitacion.setCorreoInvitado(request.getCorreoInvitado());
         invitacion.setUsuarioInvitador(usuarioInvitador);
-        invitacion.setRol(RolUsuarioOrganizacion.valueOf(request.getRol())); // Convertir String a ENUM
+        invitacion.setRol(State_Members_Organization.valueOf(request.getRol())); // Convertir String a ENUM
         invitacion.setToken(UUID.randomUUID()); // Generar un token único
-        invitacion.setEstado(EstadoInvitacion.PENDIENTE);
+        invitacion.setEstado(State_Organization_invitation.PENDIENTE);
         invitacion.setExpiraEn(LocalDateTime.now().plusDays(7)); // Expira en 7 días
 
         InvitacionOrganizacion nuevaInvitacion = invitacionOrganizacionRepository.save(invitacion);
@@ -88,11 +88,11 @@ public class InvitacionServiceImpl implements InvitacionServiceInterface {
         InvitacionOrganizacion invitacion = invitacionOrganizacionRepository.findByToken(request.getToken())
                 .orElseThrow(() -> new BadRequestException("Token de invitación inválido."));
 
-        if (invitacion.getEstado() != EstadoInvitacion.PENDIENTE) {
+        if (invitacion.getEstado() != State_Organization_invitation.PENDIENTE) {
             throw new BadRequestException("Esta invitación ya ha sido " + invitacion.getEstado().name().toLowerCase() + ".");
         }
         if (invitacion.getExpiraEn().isBefore(LocalDateTime.now())) {
-            invitacion.setEstado(EstadoInvitacion.EXPIRADA);
+            invitacion.setEstado(State_Organization_invitation.EXPIRADA);
             invitacionOrganizacionRepository.save(invitacion);
             throw new BadRequestException("La invitación ha expirado.");
         }
@@ -118,7 +118,7 @@ public class InvitacionServiceImpl implements InvitacionServiceInterface {
         nuevoRol.setEstaActivo(true);
         rolUsuarioOrganizacionRepository.save(nuevoRol);
 
-        invitacion.setEstado(EstadoInvitacion.ACEPTADA);
+        invitacion.setEstado(State_Organization_invitation.ACEPTADA);
         InvitacionOrganizacion updatedInvitacion = invitacionOrganizacionRepository.save(invitacion);
 
         return mapToInvitacionResponseDTO(updatedInvitacion);
@@ -130,16 +130,16 @@ public class InvitacionServiceImpl implements InvitacionServiceInterface {
         InvitacionOrganizacion invitacion = invitacionOrganizacionRepository.findByToken(request.getToken())
                 .orElseThrow(() -> new BadRequestException("Token de invitación inválido."));
 
-        if (invitacion.getEstado() != EstadoInvitacion.PENDIENTE) {
+        if (invitacion.getEstado() != State_Organization_invitation.PENDIENTE) {
             throw new BadRequestException("Esta invitación ya ha sido " + invitacion.getEstado().name().toLowerCase() + ".");
         }
         if (invitacion.getExpiraEn().isBefore(LocalDateTime.now())) {
-            invitacion.setEstado(EstadoInvitacion.EXPIRADA);
+            invitacion.setEstado(State_Organization_invitation.EXPIRADA);
             invitacionOrganizacionRepository.save(invitacion);
             throw new BadRequestException("La invitación ha expirado.");
         }
 
-        invitacion.setEstado(EstadoInvitacion.RECHAZADA);
+        invitacion.setEstado(State_Organization_invitation.RECHAZADA);
         InvitacionOrganizacion updatedInvitacion = invitacionOrganizacionRepository.save(invitacion);
 
         return mapToInvitacionResponseDTO(updatedInvitacion);
@@ -148,7 +148,7 @@ public class InvitacionServiceImpl implements InvitacionServiceInterface {
     @Override
     @Transactional(readOnly = true)
     public List<InvitacionResponseDTO> obtenerInvitacionesPendientesPorCorreo(String correo) {
-        return invitacionOrganizacionRepository.findByCorreoInvitadoAndEstado(correo, EstadoInvitacion.PENDIENTE.name())
+        return invitacionOrganizacionRepository.findByCorreoInvitadoAndEstado(correo, State_Organization_invitation.PENDIENTE.name())
                 .stream()
                 .map(this::mapToInvitacionResponseDTO)
                 .collect(Collectors.toList());
